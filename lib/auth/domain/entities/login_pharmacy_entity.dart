@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 
 class LoginPharmacy extends Equatable {
+
+
   final String userId;
   String? message;
   final bool isAuthenticated;

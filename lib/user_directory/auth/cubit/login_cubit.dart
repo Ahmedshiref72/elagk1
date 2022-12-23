@@ -1,5 +1,6 @@
 import 'package:elagk_pharmacy/drawer/data/models/pharmacy_user_model.dart';
 import 'package:elagk_pharmacy/user_directory/auth/cubit/states.dart';
+import 'package:elagk_pharmacy/user_directory/auth/data/models/login_pharmacy_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/network/dio_helper.dart';
@@ -12,7 +13,7 @@ class LoginCubit extends Cubit<LoginStates> {
 
   static LoginCubit get(context) => BlocProvider.of(context);
 
-  LoginModel? loginModel;
+  LoginPharmacyModel loginModel;
   void userLogin({
     required String email,
     required String password,
@@ -28,10 +29,10 @@ class LoginCubit extends Cubit<LoginStates> {
       },
     ).then((value) {
       print(value.data);
-      loginModel= PharmacyUserModel.fromJson(value.data);
+      loginModel= LoginPharmacyModel.fromJson(value.data);
 
 
-      email =loginModel.data.email.toString();
+
 
 
       emit(LoginSuccessState(loginModel));
