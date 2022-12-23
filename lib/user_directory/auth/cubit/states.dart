@@ -1,4 +1,4 @@
-
+import 'package:elagk_pharmacy/user_directory/auth/data/models/login_user_model.dart';
 abstract class LoginStates {}
 
 class LoginInitialState extends LoginStates {}
@@ -7,9 +7,9 @@ class LoginLoadingState extends LoginStates {}
 
 class LoginSuccessState extends LoginStates
 {
-  final String uId;
+  final LoginModel loginModel;
 
-  LoginSuccessState(this.uId);
+  LoginSuccessState(this.loginModel);
 }
 
 class LoginErrorState extends LoginStates

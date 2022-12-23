@@ -24,108 +24,108 @@ class LoginUserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool inProgress=false;
-    return BlocConsumer<LoginCubit,LoginStates>(
-      listener: (context, state) {
-        if (state is LoginLoadingState) {
-          inProgress = true;
-        } else {
-          inProgress = false;
-        }
+    return BlocProvider(
+      create: (BuildContext context) => LoginCubit(),
+      child: BlocConsumer<LoginCubit,LoginStates>(
+        listener: (context, state) {
+          if (state is LoginLoadingState) {
+          } else {
+          }
 
-        if (state is LoginSuccessState) {
-          showToast(text: 'Login Successfully', state: ToastStates.SUCCESS);
-          navigateFinalTo(
-            context:context,
-            screenRoute: Routes.homeDrawerScreen,
-          );
-        }
-        if (state is LoginErrorState) {
-          showToast(text: '${state.error}', state: ToastStates.ERROR);
-        }
-      },
-      builder: (context, state) {
-        return Directionality(
-          textDirection: TextDirection.rtl,
-          child: SafeArea(
-            child: Scaffold(
-              resizeToAvoidBottomInset: true,
-              body: ScreenBackground(
-                child: Center(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(AppPadding.p15),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const LogoWidget(),
-                          const AuthTitleAndSubtitle(
-                            authTitle: AppStrings.login,
-                            authSubtitle: AppStrings.pleaseLogin,
-                          ),
-                          MainTextFormField(
-                            controller: _emailController,
-                            label: AppStrings.userName,
-                            hint: AppStrings.emailExample,
-                            hintColor: AppColors.lightGrey,
-                            inputType: TextInputType.emailAddress,
-                            textDirection: TextDirection.ltr,
-                            obscure: false,
-                            validator: (value) => validateEmail(value!),
-                          ),
-                          SizedBox(
-                              height: mediaQueryHeight(context) / AppSize.s30),
-                          MainTextFormField(
-                            controller: _passwordController,
-                            label: AppStrings.password,
-                            hint: AppStrings.passwordExample,
-                            hintColor: AppColors.lightGrey,
-                            inputType: TextInputType.visiblePassword,
-                            textDirection: TextDirection.ltr,
-                            obscure: true,
-                            validator: (value) {
-                              if (value!.length < AppSize.s8) {
-                                return AppStrings.enterValidPassword;
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                              onPressed: () {
-                                navigateFinalTo(
-                                  context: context,
-                                  screenRoute: Routes.forgetPasswordScreen,
-                                );
+          if (state is LoginSuccessState) {
+            showToast(text: 'Login Successfully', state: ToastStates.SUCCESS);
+            navigateFinalTo(
+              context:context,
+              screenRoute: Routes.homeDrawerScreen,
+            );
+          }
+          if (state is LoginErrorState) {
+            showToast(text: '${state.error}', state: ToastStates.ERROR);
+          }
+        },
+        builder: (context, state) {
+          return Directionality(
+            textDirection: TextDirection.rtl,
+            child: SafeArea(
+              child: Scaffold(
+                resizeToAvoidBottomInset: true,
+                body: ScreenBackground(
+                  child: Center(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(AppPadding.p15),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const LogoWidget(),
+                            const AuthTitleAndSubtitle(
+                              authTitle: AppStrings.login,
+                              authSubtitle: AppStrings.pleaseLogin,
+                            ),
+                            MainTextFormField(
+                              controller: _emailController,
+                              label: AppStrings.userName,
+                              hint: AppStrings.emailExample,
+                              hintColor: AppColors.lightGrey,
+                              inputType: TextInputType.emailAddress,
+                              textDirection: TextDirection.ltr,
+                              obscure: false,
+                              validator: (value) => validateEmail(value!),
+                            ),
+                            SizedBox(
+                                height: mediaQueryHeight(context) / AppSize.s30),
+                            MainTextFormField(
+                              controller: _passwordController,
+                              label: AppStrings.password,
+                              hint: AppStrings.passwordExample,
+                              hintColor: AppColors.lightGrey,
+                              inputType: TextInputType.visiblePassword,
+                              textDirection: TextDirection.ltr,
+                              obscure: true,
+                              validator: (value) {
+                                if (value!.length < AppSize.s8) {
+                                  return AppStrings.enterValidPassword;
+                                } else {
+                                  return null;
+                                }
                               },
-                              child: Text(
-                                AppStrings.forgotPassword,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium!
-                                    .copyWith(
-                                      color: AppColors.yellowBold,
-                                    ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: TextButton(
+                                onPressed: () {
+                                  navigateFinalTo(
+                                    context: context,
+                                    screenRoute: Routes.forgetPasswordScreen,
+                                  );
+                                },
+                                child: Text(
+                                  AppStrings.forgotPassword,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(
+                                    color: AppColors.yellowBold,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: mediaQueryHeight(context) / AppSize.s80,
-                          ),
-                        ],
+                            SizedBox(
+                              height: mediaQueryHeight(context) / AppSize.s80,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

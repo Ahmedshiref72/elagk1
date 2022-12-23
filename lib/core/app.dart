@@ -12,6 +12,8 @@ import 'package:elagk_pharmacy/drawer/presentation/controller/pharmacy_user_prof
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../user_directory/auth/cubit/login_cubit.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp._internal();
 
@@ -23,12 +25,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (BuildContext context) =>LoginCubit(),),
         BlocProvider(create: (BuildContext context) => sl<LoginPharmacyBloc>()),
         BlocProvider(create: (BuildContext context) => sl<PasswordBloc>()),
         BlocProvider(create: (BuildContext context) => sl<AboutUsBloc>()..add(const GetContactUsEvent())..add(const GetAboutUsFirstEvent())..add(const GetAboutUsSecondEvent())),
         BlocProvider(create: (BuildContext context) => sl<MedicineBloc>()),
         BlocProvider(create: (BuildContext context) => sl<PharmacyProfileBloc>()..add(const GetPharmacyUserProfileEvent())),
         BlocProvider(create: (BuildContext context) => sl<CategoriesBloc>()..add(const GetCategoriesEvent())),
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
